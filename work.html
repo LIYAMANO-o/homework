@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>work</title>
+	<script src="animate.js"></script>
+	<link rel="stylesheet" type="text/css" href="work1.css">
+</head>
+<body>
+		<div class="box2" id="box2">
+		<div class="box4">
+			<div class="box3"><img src="images/a15.png" alt=""></div>
+			<div class="box5">
+				<ul class="text" id="text">
+					<li>[温馨提示]最近有不少不法分子在网上骗人，请大家注意!!!</li>
+					<li>[温馨提示]最近有不少不法分子在网上骗人，请大家注意!!!</li>
+				</ul>
+			</div>
+	</div>
+	<div class="box" id="box">
+		<div class="slider" id="slider">
+			<div class="slide"><img src="images/b5.png" alt=""></div>
+			<div class="slide"><img src="images/b1.png" alt=""></div>
+			<div class="slide"><img src="images/b2.png" alt=""></div>
+			<div class="slide"><img src="images/b3.png" alt=""></div>
+			<div class="slide"><img src="images/b4.png" alt=""></div>
+			<div class="slide"><img src="images/b5.png" alt=""></div>
+			<div class="slide"><img src="images/b1.png" alt=""></div>
+		</div>
+		<span id="left"> < </span>
+		<span id="right"> > </span>
+		<ul class="nav" id="nav">
+			<li class="active" style="text-align:center">1</li>
+			<li style="text-align:center">2</li>
+			<li style="text-align:center">3</li>
+			<li style="text-align:center">4</li>
+			<li style="text-align:center">5</li>
+		</ul>
+	</div>
+</div>	
+	<script>
+		var box=document.getElementById('box');
+		var box5=document.getElementById("box5");
+		var oNavlist=document.getElementById('nav').children;
+		var slider=document.getElementById('slider');
+		var left=document.getElementById('left');
+		var right=document.getElementById('right');
+		var index=1;
+		var timer;
+		var isMoving=false;
+        //字体滚动
+  	var text=document.getElementById("text");
+  	function exce(){
+  		var left=text.offsetLeft-1;
+  		text.style.left=left+"px";
+  		if(-1*text.offsetLeft>=text.offsetWidth/2){
+  			text.style.left=0;
+  		}
+  	}
+  	window.onload=setInterval(exce,10);
+		//轮播下一张的函数
+		function next(){
+			index++;
+			navChange();
+			animate(slider,{left:-1200*index},function(){
+				if(index==6){
+					slider.style.left="-1200px";
+					index=1;
+				}
+			});
+		}
+		function prev(){
+			index--;
+			animate(slider,{left:-1200*index},function(){
+				if(index==6){
+					slider.style.left="-1200px";
+					index=1;
+				}
+			});
+		}
+		var timer=setInterval(next,2000);
+		//鼠标划入清定时器
+		box.onmouseover=function(){
+			animate(left,{opacity:50});
+			animate(right,{opacity:50});
+			clearInterval(timer);
+		}
+		//鼠标划出开定时器
+		box.onmouseout=function(){
+			animate(left,{opacity:0});
+			animate(right,{opacity:0});
+			timer=setInterval(next,2000);
+		}
+		right.onclick=next;
+		left.onclick=prev;
+		//小按钮点击事件
+		for(var i=0;i<oNavlist.length;i++){
+			oNavlist[i].idx=i;
+			oNavlist[i].onclick=function(){
+				index=this.idx+1;
+				navChange();
+				animate(slider,{left:-1200*index});
+			}
+		}
+		//小按钮背景色切换
+		function navChange(){
+			for(var i=0;i<oNavlist.length;i++){
+				oNavlist[i].className='';
+			}
+			if(index==6){
+				oNavlist[0].className='active';
+			}
+			else if(index==0){
+				oNavlist[4].className='active';
+			}
+			else{
+				oNavlist[index-1].className='active';
+			}
+		}
+	
+	</script>
+</body>
+</html>
